@@ -3,7 +3,8 @@ pipeline {
     stages {
         stage('clone') {
            steps {
-               sh 'bash buiid.sh'
+               echo "${BUILD_NUMBER}"
+               sh 'bash build.sh'
                sh 'ls -al'
            }
         }    
