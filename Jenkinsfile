@@ -4,6 +4,7 @@ pipeline {
         stage('clone') {
            steps {
                echo 'welcome to jenkins'
+               sh 'ls -al'
            }
         }    
     }
