@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('clone') {
            steps {
-               echo 'welcome to jenkins'
+               sh 'bash buiid.sh'
                sh 'ls -al'
            }
         }    
