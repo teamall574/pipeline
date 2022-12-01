@@ -1,5 +1,10 @@
 pipeline {
     agent any
+        environment {
+        registry = 'anji1592/pipeline'
+        registryCredential = 'dockerhub_id'
+        dockerImage = ''
+    }
     stages {
         stage('clone') {
            steps {
@@ -12,6 +17,13 @@ pipeline {
            steps {
               s3Upload consoleLogLevel: 'INFO', dontSetBuildResultOnFailure: false, dontWaitForConcurrentBuildCompletion: false, entries: [[bucket: 'anji4845', excludedFile: '', flatten: false, gzipFiles: false, keepForever: false, managedArtifacts: false, noUploadOnFailure: true, selectedRegion: 'ap-south-1', showDirectlyInBrowser: false, sourceFile: '*.war', storageClass: 'STANDARD_IA', uploadFromSlave: false, useServerSideEncryption: false]], pluginFailureResultConstraint: 'FAILURE', profileName: 'devops-test', userMetadata: []
            }
-        }     
+        }
+        stage('Docker Image Building') {
+           steps {
+              script {
+                  dockerImage = docker.build registry + ":$BUILD_NUMBER"
+              }
+           }
+        }       
     }
 }
