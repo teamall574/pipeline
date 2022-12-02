@@ -8,13 +8,15 @@
       "subnet_id": ""
     },
     "_comment1" : "packer build -var \"aws_secret_key=foo\" template.json",
-    "_comment2" : "packer build -var-file packer-vars.json template.json",
+    "_comment2" : "packer build -var-file packer-var.json template.json",
     "builders": [
         {
       "type": "amazon-ebs",
       "region": "{{user `region`}}",
       "source_ami": "{{user `source_ami`}}",
       "instance_type": "{{user `instance_type`}}",
+      "security_group_id":"sg-0fc967a5ba52869b7",
+      "associate_public_ip_address":"true",
       "ssh_username": "ubuntu",
       "ami_name": "DevOpsClass-B18-Build-{{isotime | clean_resource_name}}",
       "vpc_id": "{{user `vpc_id`}}",
