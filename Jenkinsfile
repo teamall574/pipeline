@@ -63,6 +63,14 @@ pipeline {
                     sh "echo variable \\\"imagename\\\" { default = \\\"$AMIID\\\" } >> variables.tf"
                 }
             }
-        }          
+        }
+        stage('terraform code writing') {
+            steps {
+                dir('terraform directory') {
+                    sh 'terraform init'
+                    sh 'terraform plan'
+                }
+            }
+        }              
     }
 }

@@ -4,13 +4,22 @@ provider "aws" {
 }
 
 terraform {
-  required_version = "<= 1.3.14" #Forcing which version of Terraform needs to be used
+  required_version = "<= 2.0.14" #Forcing which version of Terraform needs to be used
   required_providers {
     aws = {
       version = "<= 5.0.0" #Forcing which version of plugin needs to be used.
       source = "hashicorp/aws"
     }
   }
+}
+
+terraform {
+    backend = "s3" {
+        bucket = "anji48456"
+        key = "testingpipeline.tfstate"
+        region = "ap-south-1"
+    }
+
 }
 
 resource "aws_vpc" "default" {
