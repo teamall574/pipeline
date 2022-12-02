@@ -8,7 +8,6 @@ resource "aws_instance" "web-1" {
     associate_public_ip_address = true
     tags ={
         Name = "test-1"
-        Env = "pro"d"
-        Owner = "anji"
+        Env = "prod"
     }
 }
