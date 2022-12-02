@@ -58,7 +58,7 @@ pipeline {
                 }
             }
             steps {
-                dir('testing directory') {
+                dir('terraform') {
                     script {
                     def AMIID = 'ami-0fa2e17a6bb4a72bb'
                     sh "echo variable \\\"imagename\\\" { default = \\\"$AMIID\\\" } >> variables.tf"
@@ -68,7 +68,7 @@ pipeline {
         }
         stage('terraform code writing') {
             steps {
-                dir('terraform directory') {
+                dir('terraform') {
                     sh 'terraform init'
                     sh 'terraform plan'
                 }
