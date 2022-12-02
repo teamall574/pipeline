@@ -4,6 +4,7 @@ pipeline {
         registry = 'anji1592/pipeline'
         registryCredential = 'dockerhub_id'
         dockerImage = ''
+        PACKER_BUILD = 'NO'
     }
     stages {
         stage('clone') {
@@ -35,6 +36,11 @@ pipeline {
            }
         }
         stage('perform packer build') {
+            when {
+                expression {
+                    env.PACKER_BUILD == 'YES'
+                }
+            }
             steps {
                 sh 'packer build -var-file packer-var.json packer.json | tee output.txt'
                 sh "tail -2 output.txt | head -2 | awk 'match(\$0, /ami-.*/) { print substr(\$0, RSTART, RLENGTH) }' > ami.txt"
@@ -44,6 +50,19 @@ pipeline {
                     sh "echo variable \\\"imagename\\\" { default = \\\"$AMIID\\\" } >> variables.tf"
                 }
             }
-        }     
+        }
+        stage('use packer image') {
+            when {
+                expression {
+                    env.PACKER_BUILD == 'NO'
+                }
+            }
+            steps {
+                script {
+                    def AMIID = 'ami-0fa2e17a6bb4a72bb'
+                    sh "echo variable \\\"imagename\\\" { default = \\\"$AMIID\\\" } >> variables.tf"
+                }
+            }
+        }          
     }
 }
