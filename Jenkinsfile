@@ -58,9 +58,11 @@ pipeline {
                 }
             }
             steps {
-                script {
+                dir('testing directory') {
+                    script {
                     def AMIID = 'ami-0fa2e17a6bb4a72bb'
                     sh "echo variable \\\"imagename\\\" { default = \\\"$AMIID\\\" } >> variables.tf"
+                }
                 }
             }
         }
